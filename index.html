@@ -10,6 +10,8 @@
       src: url('fonts/Z11-MYANSANS-REGULAR.TTF') format('truetype');
     }
 
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -130,6 +132,20 @@
       border-radius: 12px;
       box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
     }
+
+    .browser-logo {
+      width: 100px;
+      height: auto;
+      margin: 10px auto;
+      display: block;
+    }
+
+    .browser-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.5em;
+      color: white;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -168,7 +184,9 @@
   </div>
 
   <div class="instructions">
-    <p>🌐 Recommended Browsers:<br>Google Chrome</p>
+    <p style="color: #00ff88;">🌐 Recommended Browsers:</p>
+    <img src="Logos/Chrome Logo.png" alt="Chrome Logo" class="browser-logo">
+    <div class="browser-title">Google Chrome</div>
   </div>
 
   <div class="buttons-row">
