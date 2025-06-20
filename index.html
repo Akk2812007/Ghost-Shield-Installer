@@ -109,6 +109,27 @@
       justify-content: center;
       margin-bottom: 40px;
     }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+
+    .overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -135,7 +156,7 @@
       for (let i = 1; i <= desktopSteps; i++) {
         document.write(`<h3>Step ${i} :</h3>`);
         document.write(`<p>[မြန်မာစာဖြင့် ဖော်ပြချက် ${i}]</p>`);
-        document.write(`<img src="Ins.Laptop/${i}.png" alt="Step ${i}" onclick="openImage(this)">`);
+        document.write(`<img src="Ins.Laptop/${i}.png" alt="Step ${i}" onclick="showOverlay(this.src)">`);
       }
     </script>
   </div>
@@ -155,6 +176,10 @@
     <a href="https://www.google.com/chrome/" class="download-button" target="_blank">💻 Windows ( Laptop )</a>
   </div>
 
+  <div class="overlay" id="imageOverlay" onclick="this.style.display='none'">
+    <img id="overlayImg" src="" alt="">
+  </div>
+
   <script>
     function copyCode() {
       const textarea = document.getElementById("code");
@@ -172,10 +197,11 @@
       }
     }
 
-    function openImage(img) {
-      const newTab = window.open();
-      newTab.document.write('<img src="' + img.src + '" style="width:100%">');
-      newTab.document.title = img.alt;
+    function showOverlay(src) {
+      const overlay = document.getElementById("imageOverlay");
+      const overlayImg = document.getElementById("overlayImg");
+      overlayImg.src = src;
+      overlay.style.display = "flex";
     }
   </script>
 
