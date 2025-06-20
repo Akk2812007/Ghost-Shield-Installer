@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛡️ Ghost Shield Installer</title>
+  <style>
+    @font-face {
+      font-family: 'MyanmarFont';
+      src: url('fonts/Z11-MYANSANS-REGULAR.TTF') format('truetype');
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #0d1117, #11151c);
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00ff88;
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #bbb;
+      max-width: 600px;
+    }
+
+    .copy-button, .nav-button, .download-button {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: #00ff88;
+      font-weight: bold;
+      font-size: 1em;
+      padding: 15px 25px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      margin: 10px;
+    }
+
+    .copy-button:hover, .nav-button:hover, .download-button:hover {
+      background: rgba(0, 255, 136, 0.2);
+      color: #ffffff;
+      transform: scale(1.05);
+    }
+
+    .success {
+      margin-top: 10px;
+      font-size: 0.95em;
+      color: #00ff88;
+      display: none;
+    }
+
+    .instructions {
+      margin-top: 30px;
+      font-size: 0.95em;
+      color: #888;
+      max-width: 500px;
+    }
+
+    .step {
+      text-align: left;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    .step h3 {
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-family: 'MyanmarFont', 'Segoe UI', sans-serif;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+
+    .step img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .step img:hover {
+      transform: scale(1.01);
+    }
+
+    .buttons-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>👻 Ghost Shield Installer</h1>
+  <p>This button copies the invisibility code.<br>Then you can paste it into a bookmark to become fully undetectable. 🥷</p>
+
+  <button class="copy-button" onclick="copyCode()">⚔️ Copy Ghost Shield Bookmarklet</button>
+  <div class="success" id="successMsg">✅ Copied! Now go bookmark it.</div>
+
+  <textarea id="code">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);</textarea>
+
+  <h2 style="margin-top: 40px;">Installing Instructions</h2>
+  <div class="buttons-row">
+    <button class="nav-button" onclick="document.getElementById('desktopSection').scrollIntoView({behavior: 'smooth'});">💻 Desktop</button>
+    <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior: 'smooth'});">📱 Mobile</button>
+  </div>
+
+  <!-- Desktop Instruction Section -->
+  <div id="desktopSection" class="step">
+    <h3>💻 Desktop:</h3>
+    <script>
+      const desktopSteps = 7;
+      for (let i = 1; i <= desktopSteps; i++) {
+        document.write(`<h3>Step ${i} :</h3>`);
+        document.write(`<p>[မြန်မာစာဖြင့် ဖော်ပြချက် ${i}]</p>`);
+        document.write(`<img src="Ins.Laptop/${i}.png" alt="Step ${i}" onclick="openImage(this)">`);
+      }
+    </script>
+  </div>
+
+  <!-- Mobile Section Placeholder -->
+  <div id="mobileSection" class="step">
+    <h3>📱 Mobile:</h3>
+    <p>Coming soon...</p>
+  </div>
+
+  <div class="instructions">
+    <p>🌐 Recommended Browsers:<br>Google Chrome</p>
+  </div>
+
+  <div class="buttons-row">
+    <a href="https://play.google.com/store/apps/details?id=com.android.chrome" class="download-button" target="_blank">📱 Play Store ( Mobile )</a>
+    <a href="https://www.google.com/chrome/" class="download-button" target="_blank">💻 Windows ( Laptop )</a>
+  </div>
+
+  <script>
+    function copyCode() {
+      const textarea = document.getElementById("code");
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          document.getElementById("successMsg").style.display = "block";
+        } else {
+          alert("Copy failed. Please copy manually.");
+        }
+      } catch (err) {
+        alert("Copy not supported on this browser.");
+      }
+    }
+
+    function openImage(img) {
+      const newTab = window.open();
+      newTab.document.write('<img src="' + img.src + '" style="width:100%">');
+      newTab.document.title = img.alt;
+    }
+  </script>
+
+</body>
+</html>
