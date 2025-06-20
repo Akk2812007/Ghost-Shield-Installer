@@ -148,6 +148,32 @@
       color: white;
       margin-top: 10px;
     }
+
+    /* Scroll to Top Button */
+    #toTopBtn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.18);
+      color: #00ff88;
+      font-size: 2em;
+      box-shadow: 0 2px 12px #0008;
+      cursor: pointer;
+      z-index: 10000;
+      transition: background 0.2s, transform 0.1s;
+      opacity: 0.7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #toTopBtn:hover {
+      background: rgba(0, 255, 136, 0.35);
+    }
   </style>
 </head>
 <body>
@@ -160,10 +186,21 @@
 
   <textarea id="code" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=function(){return Promise.resolve();};setInterval(()=>{navigator.clipboard.writeText=()=>Promise.resolve();},500);</textarea>
 
-  <h2 style="margin-top: 40px;">Installing Instructions</h2>
+  <h2 style="margin-top: 40px;">ℹ️ Installing Instructions</h2>
   <div class="buttons-row">
     <button class="nav-button" onclick="document.getElementById('desktopSection').scrollIntoView({behavior: 'smooth'});">💻 Desktop</button>
     <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior: 'smooth'});">📱 Mobile</button>
+  </div>
+
+  <div class="instructions">
+    <p style="color: #00ff88;">🌐 Recommended Browsers:</p>
+    <img src="Logos/Chrome Logo.png" alt="Chrome Logo" class="browser-logo">
+    <div class="browser-title">Google Chrome</div>
+  </div>
+
+  <div class="buttons-row">
+    <a href="https://play.google.com/store/apps/details?id=com.android.chrome" class="download-button" target="_blank">📱 Play Store ( Mobile )</a>
+    <a href="https://www.google.com/chrome/" class="download-button" target="_blank">💻 Windows ( Laptop )</a>
   </div>
 
   <!-- Desktop Instruction Section -->
@@ -240,20 +277,13 @@
     </div>
   </div>
 
-  <div class="instructions">
-    <p style="color: #00ff88;">🌐 Recommended Browsers:</p>
-    <img src="Logos/Chrome Logo.png" alt="Chrome Logo" class="browser-logo">
-    <div class="browser-title">Google Chrome</div>
-  </div>
-
-  <div class="buttons-row">
-    <a href="https://play.google.com/store/apps/details?id=com.android.chrome" class="download-button" target="_blank">📱 Play Store ( Mobile )</a>
-    <a href="https://www.google.com/chrome/" class="download-button" target="_blank">💻 Windows ( Laptop )</a>
-  </div>
-
   <div class="overlay" id="imageOverlay" onclick="this.style.display='none'">
     <img id="overlayImg" src="" alt="">
   </div>
+
+  <button id="toTopBtn" onclick="scrollToTop()">
+    ↑
+  </button>
 
   <script>
     function copyCode() {
@@ -280,6 +310,15 @@
       const overlayImg = document.getElementById("overlayImg");
       overlayImg.src = src;
       overlay.style.display = "flex";
+    }
+
+    function scrollToTop() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      const btn = document.getElementById('toTopBtn');
+      btn.style.background = 'rgba(0,255,136,0.35)';
+      setTimeout(() => {
+        btn.style.background = 'rgba(0,255,136,0.18)';
+      }, 180);
     }
   </script>
 
