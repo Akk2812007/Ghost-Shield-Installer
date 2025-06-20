@@ -225,7 +225,7 @@
   <button class="copy-button" onclick="copyCode()">⚔️ Copy Ghost Shield Bookmarklet</button>
   <div class="success" id="successMsg">✅ Copied! Now go bookmark it.</div>
 
-  <textarea id="code" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);</textarea>
+  <textarea id="code" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=function(){return Promise.resolve();};setInterval(()=>{navigator.clipboard.writeText=()=>Promise.resolve();},500);</textarea>
 
   <h2 style="margin-top: 40px;">Installing Instructions</h2>
   <div class="buttons-row">
