@@ -146,12 +146,13 @@
       color: white;
       margin-top: 10px;
     }
-      table {
+
+    /* Table styling */
+    table {
       width: 100%;
       border-collapse: collapse;
       font-size: 1em;
       margin: 30px 0;
-      overflow-x: auto;
     }
 
     table thead th {
@@ -165,31 +166,53 @@
       padding: 8px 18px;
     }
 
+    /* Wrapper for horizontal scroll on small screens */
+    .table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    /* Responsive Table for Mobile */
     @media screen and (max-width: 600px) {
       table, thead, tbody, th, td, tr {
         display: block;
         width: 100%;
       }
-      table thead {
-        display: none;
+
+      /* Hide table header but keep for screen readers */
+      thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
       }
-      table tr {
-        margin-bottom: 20px;
+
+      tr {
         border: 1px solid #333;
         border-radius: 10px;
+        margin-bottom: 15px;
         padding: 10px;
         background-color: #1a1f29;
       }
-      table td {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px;
+
+      td {
+        padding: 12px 10px;
         border-bottom: 1px solid #222;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
       }
-      table td::before {
+
+      td:last-child {
+        border-bottom: none;
+      }
+
+      td::before {
         content: attr(data-label);
-        font-weight: bold;
+        flex: 0 0 130px;
+        font-weight: 700;
         color: #00ff88;
+        margin-right: 12px;
+        font-size: 1em;
       }
     }
   </style>
@@ -202,7 +225,7 @@
   <button class="copy-button" onclick="copyCode()">⚔️ Copy Ghost Shield Bookmarklet</button>
   <div class="success" id="successMsg">✅ Copied! Now go bookmark it.</div>
 
-  <textarea id="code">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);</textarea>
+  <textarea id="code" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);</textarea>
 
   <h2 style="margin-top: 40px;">Installing Instructions</h2>
   <div class="buttons-row">
@@ -213,25 +236,27 @@
   <!-- Table Before Desktop Instructions -->
   <div class="step">
     <h3 style="color: #00ff88; margin-top: 60px;">🔒 What It Blocks — Confirmed ✅</h3>
-    <table style="width: 100%; border-collapse: collapse; font-size: 1em; margin: 30px 0;">
-      <thead>
-        <tr style="color: #00ff88; text-align: left;">
-          <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Detection Type</th>
-          <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Status</th>
-          <th style="padding: 8px 18px; border-bottom: 1px solid #333;">How It’s Handled</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td data-label="Detection Type">window.onblur</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">No tab switch / app switch detection</td></tr>
-        <tr><td data-label="Detection Type">document.onvisibilitychange</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">No visibility change tracking</td></tr>
-        <tr><td data-label="Detection Type">element.oncopy</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">All oncopy listeners removed from page</td></tr>
-        <tr><td data-label="Detection Type">navigator.clipboard.writeText()</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Fake promise, logs nothing to server</td></tr>
-        <tr><td data-label="Detection Type">Moodle re-hooking clipboard spy</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Overridden every 0.5s using setInterval</td></tr>
-        <tr><td data-label="Detection Type">Auto-copy on blur or resize</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Clipboard hooks don't log actual copy</td></tr>
-        <tr><td data-label="Detection Type">Console logs like first.js:4946</td><td data-label="Status">😴 Silent</td><td data-label="How It’s Handled">Console is quiet = no logging</td></tr>
-        <tr><td data-label="Detection Type">Text copied events</td><td data-label="Status">💥 Nullified</td><td data-label="How It’s Handled">They say “copied” but clipboard = clean</td></tr>
-      </tbody>
-    </table>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr style="color: #00ff88; text-align: left;">
+            <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Detection Type</th>
+            <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Status</th>
+            <th style="padding: 8px 18px; border-bottom: 1px solid #333;">How It’s Handled</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-label="Detection Type">window.onblur</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">No tab switch / app switch detection</td></tr>
+          <tr><td data-label="Detection Type">document.onvisibilitychange</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">No visibility change tracking</td></tr>
+          <tr><td data-label="Detection Type">element.oncopy</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">All oncopy listeners removed from page</td></tr>
+          <tr><td data-label="Detection Type">navigator.clipboard.writeText()</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Fake promise, logs nothing to server</td></tr>
+          <tr><td data-label="Detection Type">Moodle re-hooking clipboard spy</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Overridden every 0.5s using setInterval</td></tr>
+          <tr><td data-label="Detection Type">Auto-copy on blur or resize</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Clipboard hooks don't log actual copy</td></tr>
+          <tr><td data-label="Detection Type">Console logs like first.js:4946</td><td data-label="Status">😴 Silent</td><td data-label="How It’s Handled">Console is quiet = no logging</td></tr>
+          <tr><td data-label="Detection Type">Text copied events</td><td data-label="Status">💥 Nullified</td><td data-label="How It’s Handled">They say “copied” but clipboard = clean</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 
   <!-- Desktop Instruction Section -->
@@ -246,9 +271,6 @@
       }
     </script>
   </div>
-
-  
-
 
   <div id="mobileSection" class="step">
     <h3>📱 Mobile:</h3>
@@ -279,6 +301,9 @@
         const successful = document.execCommand("copy");
         if (successful) {
           document.getElementById("successMsg").style.display = "block";
+          setTimeout(() => {
+            document.getElementById("successMsg").style.display = "none";
+          }, 2500);
         } else {
           alert("Copy failed. Please copy manually.");
         }
