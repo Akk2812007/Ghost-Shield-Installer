@@ -164,6 +164,30 @@
     <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior: 'smooth'});">📱 Mobile</button>
   </div>
 
+  <!-- Table Before Desktop Instructions -->
+  <div class="step">
+    <h3 style="color: #00ff88; margin-top: 60px;">🔒 What It Blocks — Confirmed ✅</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 1em; margin: 30px 0;">
+      <thead>
+        <tr style="color: #00ff88; text-align: left;">
+          <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Detection Type</th>
+          <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Status</th>
+          <th style="padding: 8px 18px; border-bottom: 1px solid #333;">How It’s Handled</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding: 8px 18px;">window.onblur</td><td>✅ Blocked</td><td>No tab switch / app switch detection</td></tr>
+        <tr><td style="padding: 8px 18px;">document.onvisibilitychange</td><td>✅ Blocked</td><td>No visibility change tracking</td></tr>
+        <tr><td style="padding: 8px 18px;">element.oncopy</td><td>✅ Blocked</td><td>All oncopy listeners removed from page</td></tr>
+        <tr><td style="padding: 8px 18px;">navigator.clipboard.writeText()</td><td>✅ Blocked</td><td>Fake promise, logs nothing to server</td></tr>
+        <tr><td style="padding: 8px 18px;">Moodle re-hooking clipboard spy</td><td>✅ Blocked</td><td>Overridden every 0.5s using setInterval</td></tr>
+        <tr><td style="padding: 8px 18px;">Auto-copy on blur or resize</td><td>✅ Blocked</td><td>Clipboard hooks don't log actual copy</td></tr>
+        <tr><td style="padding: 8px 18px;">Console logs like first.js:4946</td><td>😴 Silent</td><td>Console is quiet = no logging</td></tr>
+        <tr><td style="padding: 8px 18px;">Text copied events</td><td>💥 Nullified</td><td>They say “copied” but clipboard = clean</td></tr>
+      </tbody>
+    </table>
+  </div>
+
   <!-- Desktop Instruction Section -->
   <div id="desktopSection" class="step">
     <h3>💻 Desktop:</h3>
@@ -177,7 +201,31 @@
     </script>
   </div>
 
-  <!-- Mobile Section Placeholder -->
+  <!-- Protection Table -->
+  <div class="step">
+    <h3 style="color: #00ff88; margin-top: 60px;">🔒 What It Blocks — Confirmed ✅</h3>
+    <table style="width: 100%; border-collapse: collapse; font-size: 1em; margin-top: 20px;">
+      <thead>
+        <tr style="color: #00ff88; text-align: left;">
+          <th style="padding: 8px 12px; border-bottom: 1px solid #333;">Detection Type</th>
+          <th style="padding: 8px 12px; border-bottom: 1px solid #333;">Status</th>
+          <th style="padding: 8px 12px; border-bottom: 1px solid #333;">How It’s Handled</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td style="padding: 8px 12px;">window.onblur</td><td>✅ Blocked</td><td>No tab switch / app switch detection</td></tr>
+        <tr><td style="padding: 8px 12px;">document.onvisibilitychange</td><td>✅ Blocked</td><td>No visibility change tracking</td></tr>
+        <tr><td style="padding: 8px 12px;">element.oncopy</td><td>✅ Blocked</td><td>All oncopy listeners removed from page</td></tr>
+        <tr><td style="padding: 8px 12px;">navigator.clipboard.writeText()</td><td>✅ Blocked</td><td>Fake promise, logs nothing to server</td></tr>
+        <tr><td style="padding: 8px 12px;">Moodle re-hooking clipboard spy</td><td>✅ Blocked</td><td>Overridden every 0.5s using setInterval</td></tr>
+        <tr><td style="padding: 8px 12px;">Auto-copy on blur or resize</td><td>✅ Blocked</td><td>Clipboard hooks don't log actual copy</td></tr>
+        <tr><td style="padding: 8px 12px;">Console logs like first.js:4946</td><td>😴 Silent</td><td>Console is quiet = no logging</td></tr>
+        <tr><td style="padding: 8px 12px;">Text copied events</td><td>💥 Nullified</td><td>They say “copied” but clipboard = clean</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+
   <div id="mobileSection" class="step">
     <h3>📱 Mobile:</h3>
     <p>Coming soon...</p>
