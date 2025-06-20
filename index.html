@@ -98,6 +98,8 @@
       border-radius: 12px;
       cursor: pointer;
       transition: transform 0.2s ease;
+      /* Add drop shadow for all step images */
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35), 0 0 0 4px #00ff8855;
     }
 
     .step img:hover {
@@ -146,75 +148,6 @@
       color: white;
       margin-top: 10px;
     }
-
-    /* Table styling */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 1em;
-      margin: 30px 0;
-    }
-
-    table thead th {
-      color: #00ff88;
-      text-align: left;
-      padding: 8px 18px;
-      border-bottom: 1px solid #333;
-    }
-
-    table td {
-      padding: 8px 18px;
-    }
-
-    /* Wrapper for horizontal scroll on small screens */
-    .table-wrapper {
-      width: 100%;
-      overflow-x: auto;
-    }
-
-    /* Responsive Table for Mobile */
-    @media screen and (max-width: 600px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-        width: 100%;
-      }
-
-      /* Hide table header but keep for screen readers */
-      thead tr {
-        position: absolute;
-        top: -9999px;
-        left: -9999px;
-      }
-
-      tr {
-        border: 1px solid #333;
-        border-radius: 10px;
-        margin-bottom: 15px;
-        padding: 10px;
-        background-color: #1a1f29;
-      }
-
-      td {
-        padding: 12px 10px;
-        border-bottom: 1px solid #222;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-      }
-
-      td:last-child {
-        border-bottom: none;
-      }
-
-      td::before {
-        content: attr(data-label);
-        flex: 0 0 130px;
-        font-weight: 700;
-        color: #00ff88;
-        margin-right: 12px;
-        font-size: 1em;
-      }
-    }
   </style>
 </head>
 <body>
@@ -233,48 +166,78 @@
     <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior: 'smooth'});">📱 Mobile</button>
   </div>
 
-  <!-- Table Before Desktop Instructions -->
-  <div class="step">
-    <h3 style="color: #00ff88; margin-top: 60px;">🔒 What It Blocks — Confirmed ✅</h3>
-    <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr style="color: #00ff88; text-align: left;">
-            <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Detection Type</th>
-            <th style="padding: 8px 18px; border-bottom: 1px solid #333;">Status</th>
-            <th style="padding: 8px 18px; border-bottom: 1px solid #333;">How It’s Handled</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td data-label="Detection Type">window.onblur</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">No tab switch / app switch detection</td></tr>
-          <tr><td data-label="Detection Type">document.onvisibilitychange</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">No visibility change tracking</td></tr>
-          <tr><td data-label="Detection Type">element.oncopy</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">All oncopy listeners removed from page</td></tr>
-          <tr><td data-label="Detection Type">navigator.clipboard.writeText()</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Fake promise, logs nothing to server</td></tr>
-          <tr><td data-label="Detection Type">Moodle re-hooking clipboard spy</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Overridden every 0.5s using setInterval</td></tr>
-          <tr><td data-label="Detection Type">Auto-copy on blur or resize</td><td data-label="Status">✅ Blocked</td><td data-label="How It’s Handled">Clipboard hooks don't log actual copy</td></tr>
-          <tr><td data-label="Detection Type">Console logs like first.js:4946</td><td data-label="Status">😴 Silent</td><td data-label="How It’s Handled">Console is quiet = no logging</td></tr>
-          <tr><td data-label="Detection Type">Text copied events</td><td data-label="Status">💥 Nullified</td><td data-label="How It’s Handled">They say “copied” but clipboard = clean</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
   <!-- Desktop Instruction Section -->
   <div id="desktopSection" class="step">
     <h3>💻 Desktop:</h3>
-    <script>
-      const desktopSteps = 7;
-      for (let i = 1; i <= desktopSteps; i++) {
-        document.write(`<h3>Step ${i} :</h3>`);
-        document.write(`<p>[မြန်မာစာဖြင့် ဖော်ပြချက် ${i}]</p>`);
-        document.write(`<img src="Ins.Laptop/${i}.png" alt="Step ${i}" onclick="showOverlay(this.src)">`);
-      }
-    </script>
+    <div id="desktopStep1">
+      <h3>Step 1 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 1]</p>
+      <img src="Ins.Laptop/1.png" alt="Step 1" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep2">
+      <h3>Step 2 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 2]</p>
+      <img src="Ins.Laptop/2.png" alt="Step 2" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep3">
+      <h3>Step 3 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 3]</p>
+      <img src="Ins.Laptop/3.png" alt="Step 3" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep4">
+      <h3>Step 4 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 4]</p>
+      <img src="Ins.Laptop/4.png" alt="Step 4" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep5">
+      <h3>Step 5 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 5]</p>
+      <img src="Ins.Laptop/5.png" alt="Step 5" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep6">
+      <h3>Step 6 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 6]</p>
+      <img src="Ins.Laptop/6.png" alt="Step 6" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep7">
+      <h3>Step 7 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 7]</p>
+      <img src="Ins.Laptop/7.png" alt="Step 7" onclick="showOverlay(this.src);">
+    </div>
   </div>
 
   <div id="mobileSection" class="step">
     <h3>📱 Mobile:</h3>
-    <p>Coming soon...</p>
+    <div id="mobileStep1">
+      <h3>Step 1 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 1]</p>
+      <img src="Ins.Mobile/1.png" alt="Step 1" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep2">
+      <h3>Step 2 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 2]</p>
+      <img src="Ins.Mobile/2.png" alt="Step 2" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep3">
+      <h3>Step 3 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 3]</p>
+      <img src="Ins.Mobile/3.png" alt="Step 3" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep4">
+      <h3>Step 4 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 4]</p>
+      <img src="Ins.Mobile/4.png" alt="Step 4" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep5">
+      <h3>Step 5 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 5]</p>
+      <img src="Ins.Mobile/5.png" alt="Step 5" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep6">
+      <h3>Step 6 :</h3>
+      <p>[မြန်မာစာဖြင့် ဖော်ပြချက် 6]</p>
+      <img src="Ins.Mobile/6.png" alt="Step 6" onclick="showOverlay(this.src);">
+    </div>
   </div>
 
   <div class="instructions">
