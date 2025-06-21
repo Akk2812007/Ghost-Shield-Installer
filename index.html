@@ -174,6 +174,131 @@
     #toTopBtn:hover {
       background: rgba(0, 255, 136, 0.35);
     }
+
+    /* Status Report Table */
+    .status-report-container {
+      background: rgba(0,255,136,0.06);
+      border: 1.5px solid #00ff8850;
+      border-radius: 16px;
+      margin: 30px auto 30px auto;
+      padding: 18px 10px 10px 10px;
+      max-width: 900px;
+      box-shadow: 0 4px 32px 0 rgba(0,255,136,0.07);
+    }
+
+    .status-report-desc {
+      font-size: 1.08em;
+      margin-bottom: 10px;
+      color: #00ff88;
+      text-align: left;
+    }
+
+    .status-report-desc strong {
+      font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    .status-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1em;
+      background: rgba(0,0,0,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 320px;
+    }
+
+    .status-table th, .status-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #00ff8822;
+      text-align: left;
+    }
+
+    .status-table th {
+      background: rgba(0,255,136,0.13);
+      color: #00ff88;
+      font-weight: bold;
+      font-size: 1.05em;
+    }
+
+    .status-table td.safe {
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    .status-table td.warn {
+      color: #ffd600;
+      font-weight: bold;
+    }
+
+    .status-table td.no {
+      color: #ff4b4b;
+      font-weight: bold;
+    }
+
+    .status-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-summary {
+      margin-top: 16px;
+      font-size: 1.08em;
+      color: #bbb;
+      text-align: left;
+    }
+
+    .status-summary .safe {
+      color: #00ff88;
+    }
+    .status-summary .warn {
+      color: #ffd600;
+    }
+    .status-summary .no {
+      color: #ff4b4b;
+    }
+
+    @media (max-width: 600px) {
+      .status-report-container {
+        padding: 10px 2px 8px 2px;
+        font-size: 0.98em;
+      }
+      .status-table th, .status-table td {
+        padding: 8px 4px;
+        font-size: 0.97em;
+      }
+      .status-report-desc, .status-summary {
+        font-size: 0.98em;
+      }
+    }
+
+    /* Make all table text use MyanmarFont except the title */
+    .status-table,
+    .status-table th,
+    .status-table td,
+    .status-summary,
+    .status-report-desc span,
+    .status-summary span,
+    .status-table-wrapper {
+      font-family: 'MyanmarFont', 'Segoe UI', sans-serif;
+    }
+
+    /* Only the title (strong) uses DM Sans or fallback */
+    .status-report-desc strong {
+      font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    /* Make step instruction text white and glowing */
+    #desktopSection p,
+    #mobileSection p {
+      color: #fff !important;
+    
+    
+    }
   </style>
 </head>
 <body>
@@ -191,10 +316,97 @@
 
 
   <h2 style="margin-top: 40px;">ℹ️ Installing Instructions</h2>
-  <div class="buttons-row">
-    <button class="nav-button" onclick="document.getElementById('desktopSection').scrollIntoView({behavior: 'smooth'});">💻 Desktop</button>
-    <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior: 'smooth'});">📱 Mobile</button>
+
+  <div class="buttons-row" style="margin-bottom:18px;">
+    <button class="nav-button" onclick="document.getElementById('desktopSection').scrollIntoView({behavior:'smooth'});">💻 Desktop</button>
+    <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior:'smooth'});">📱 Mobile</button>
   </div>
+
+  <!-- Status Report Table & Description START -->
+  <div class="status-report-container">
+    <div class="status-report-desc">
+      <strong>🔐 FINAL STATUS REPORT – “Can They Catch You?”</strong><br>
+      <span style="color:#bbb;">
+        ဘယ်အရာတွေကနေ ကာကွယ်လို့ ရ ၊ မရ ပြဇယား <br>
+        <b>✅ = လုံခြုံ</b>, <b>⚠️ = မြင်ရနိုင်ပေမယ့် အန္တရာယ် မရှိ</b>, <b>❌ = မရ</b>
+      </span>
+    </div>
+    <div class="status-table-wrapper">
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>💡 ဘာတွေလုပ်လို့ရ ?</th>
+            <th>✅ လုံခြုံရဲ့လား ?</th>
+            <th>🛡️ ဘာလို့ လုံခြုံရတာလဲ / ဘာကြောင့်လဲ </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Select + Hold to Copy လို့ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Ghost Shield allows copy without triggering logs</td>
+          </tr>
+          <tr>
+            <td>တစ်ခြား ChatGPT နဲ့ Apps တွေကို Share ရလား</td>
+            <td class="safe">✅ ရ</td>
+            <td>ဖုန်းပေါ်တွင် အလုပ်ဖြစ်သည် (link ပါတတ်တာ သာမာန်)</td>
+          </tr>
+          <tr>
+            <td>Tabs & Apps အပြောင်းအလဲရလား ? (blur)</td>
+            <td class="safe">✅ ရ</td>
+            <td>Ghost Shield blocks Moodle from knowing you left</td>
+          </tr>
+          <tr>
+            <td>Chrome ကွယ်တာ နဲ့ အကျဥ်းအချဲ့ ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Ghost Shield blocks ၊ 🫠အရမ်း အဝင်အထွက် မလုပ်သင့်</td>
+          </tr>
+          <tr>
+            <td>မေးခွန်းတွေ clipboard ကိုကူးလို့ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Fake clipboard makes Moodle think nothing happened</td>
+          </tr>
+          <tr>
+            <td>Ctrl+C or right-click-copy ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Logs are blocked, and your copy still works</td>
+          </tr>
+          <tr>
+            <td>မေးခွန်းတစ်ပုဒ်လုံး ကူးလို့ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Safe via selection or console tools</td>
+          </tr>
+          <tr>
+            <td>Chrome Window Size အပြောင်းအလဲ (ကွန်ပြူတာ)</td>
+            <td class="warn">⚠️သာမာန်</td>
+            <td>ကာကွယ်လို့ မရ, အန္တရာယ်နည်းသည်။ အရမ်းမလုပ်သင့် 🫠</td>
+          </tr>
+          <tr>
+            <td>ကိုယ်ကူးတာတွေကို Moodle မှတ်ထားလား ?</td>
+            <td class="warn">⚠️မမှတ်</td>
+            <td>From browser itself, but not dangerous if no real copy triggered</td>
+          </tr>
+          <tr>
+            <td>Safe Exam Browser(SEB)တွင် အလုပ်ဖြစ်လား ?</td>
+            <td class="no">❌မရ (ပိတ်ခံထားရ)</td>
+            <td>Ghost Shield won’t work in SEB – Chrome သုံးနေရင် အဆင်ပြေပါသည်</td>
+          </tr>
+          <tr>
+            <td>Moodle က ကိုယ့်ခြေရာ၊လက်ရာ မြင်ရသလား</td>
+            <td class="no">✅မမြင်ရ</td>
+            <td>All event tracking is neutralized by Ghost Shield</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="status-summary">
+      <b>🧠 အတိုချုံး:</b><br>
+      <span class="safe">✅ အကြောက်အလန့်မရှိ ကူးယူနိုင်, ရှဲလ်နိုင်, Apps အဝင်အထွက်လုပ်နိုင်, အပေါ်အောက်ဆွဲနိုင်ပါသည်။</span><br><br>
+      <span class="no">❌သို့သော် ⚠️အရမ်းအဝင်အထွက် မလုပ်ဖို့ သတိပေးပါရစေ။ ⚠️ Bookmark ကို စာမေးပွဲ page ရောက်ပြီးမှ မနှိတ်ထားပဲ မလုပ်မိစေရန်။ သေချာဖို့ လိုအပ်သည်။</span><br><br>
+      <span class="warn">⚠️ သတိပေးချက်တစ်ချို့အား Codes ထဲတွင်ဖြစ်နိုင်ပါသည်, သို့သော် ထောက်လှမ်းခြင်းနှင့် မှတ်တမ်းမတင်နိုင်ပါ။ 😉</span>
+    </div>
+  </div>
+  <!-- Status Report Table & Description END -->
 
   <div class="instructions">
     <p style="color: #00ff88;">🌐 Recommended Browsers:</p>
