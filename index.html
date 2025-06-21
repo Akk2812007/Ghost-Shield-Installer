@@ -183,7 +183,7 @@
 
   <button class="copy-button" onclick="copyCode('desktop')">⚔️ Copy Ghost Shield For 💻Desktop</button>
   <div class="success" id="successMsgDesktop">✅ Copied! Now go bookmark it.</div>
-  <textarea id="codeDesktop" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();e.preventDefault();},true);</textarea>
+  <textarea id="codeDesktop" style="position:absolute; left:-9999px; top:-9999px;">javascript:(()=>{window.onblur=null;document.onvisibilitychange=null;navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);})();</textarea>
 
   <button class="copy-button" onclick="copyCode('mobile')">⚔️ Copy Ghost Shield For 📱Mobile</button>
   <div class="success" id="successMsgMobile">✅ Copied! Now go bookmark it.</div>
