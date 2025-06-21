@@ -181,10 +181,14 @@
   <h1>👻 Ghost Shield Installer</h1>
   <p>This button copies the invisibility code.<br>Then you can paste it into a bookmark to become fully undetectable. 🥷</p>
 
-  <button class="copy-button" onclick="copyCode()">⚔️ Copy Ghost Shield Bookmarklet</button>
-  <div class="success" id="successMsg">✅ Copied! Now go bookmark it.</div>
+  <button class="copy-button" onclick="copyCode('desktop')">⚔️ Copy Ghost Shield For 💻Desktop</button>
+  <div class="success" id="successMsgDesktop">✅ Copied! Now go bookmark it.</div>
+  <textarea id="codeDesktop" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();e.preventDefault();},true);</textarea>
 
-  <textarea id="code" style="position:absolute; left:-9999px; top:-9999px;">javascript:window.onblur=null;document.onvisibilitychange=null;document.querySelectorAll('*').forEach(el=>el.oncopy=null);navigator.clipboard.writeText=function(){return Promise.resolve();};setInterval(()=>{navigator.clipboard.writeText=()=>Promise.resolve();},500);</textarea>
+  <button class="copy-button" onclick="copyCode('mobile')">⚔️ Copy Ghost Shield For 📱Mobile</button>
+  <div class="success" id="successMsgMobile">✅ Copied! Now go bookmark it.</div>
+  <textarea id="codeMobile" style="position:absolute; left:-9999px; top:-9999px;">javascript:(()=>{window.onblur=null;document.onvisibilitychange=null;window.addEventListener('blur',e=>{e.stopImmediatePropagation();e.preventDefault();},true);document.addEventListener('visibilitychange',e=>{e.stopImmediatePropagation();e.preventDefault();},true);const oWA=window.addEventListener;window.addEventListener=function(t,...a){if(t==='blur'||t==='visibilitychange')return;return oWA.apply(this,[t,...a])};const oDA=document.addEventListener;document.addEventListener=function(t,...a){if(t==='visibilitychange')return;return oDA.apply(this,[t,...a])};document.querySelectorAll('*').forEach(e=>e.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();e.preventDefault();},true);setInterval(()=>{navigator.clipboard.writeText=()=>Promise.resolve();},400);})();</textarea>
+
 
   <h2 style="margin-top: 40px;">ℹ️ Installing Instructions</h2>
   <div class="buttons-row">
@@ -286,16 +290,17 @@
   </button>
 
   <script>
-    function copyCode() {
-      const textarea = document.getElementById("code");
+    function copyCode(type) {
+      const textarea = document.getElementById(type === 'desktop' ? "codeDesktop" : "codeMobile");
+      const successMsg = document.getElementById(type === 'desktop' ? "successMsgDesktop" : "successMsgMobile");
       textarea.select();
       textarea.setSelectionRange(0, 99999);
       try {
         const successful = document.execCommand("copy");
         if (successful) {
-          document.getElementById("successMsg").style.display = "block";
+          successMsg.style.display = "block";
           setTimeout(() => {
-            document.getElementById("successMsg").style.display = "none";
+            successMsg.style.display = "none";
           }, 2500);
         } else {
           alert("Copy failed. Please copy manually.");
