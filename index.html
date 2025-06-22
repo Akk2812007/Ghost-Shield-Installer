@@ -9,6 +9,11 @@
       font-family: 'MyanmarFont';
       src: url('fonts/Z11-MYANSANS-REGULAR.TTF') format('truetype');
     }
+    @font-face {
+      font-family: 'YatiRound';
+      src: url('fonts/YatiRound-ExtraBold.ttf') format('truetype');
+      font-weight: bold;
+    }
 
     @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
 
@@ -58,6 +63,7 @@
       background: rgba(0, 255, 136, 0.2);
       color: #ffffff;
       transform: scale(1.05);
+      cursor: url('Cursor/2.png'), pointer;
     }
 
     .success {
@@ -299,6 +305,19 @@
     
     
     }
+    body, button, a, .copy-button, .nav-button, .download-button {
+  cursor: url('Cursor/1.png'), auto;
+}
+    .install-title {
+      font-family: 'YatiRound', 'MyanmarFont', 'Segoe UI', sans-serif;
+      font-size: 25px;
+      color: #00ff88;
+      text-shadow: 0 0 12px #00ff8899, 0 0 2px #00ff88;
+      margin-top: 40px;
+      margin-bottom: 18px;
+      letter-spacing: 0.01em;
+      display: block;
+    }
   </style>
 </head>
 <body>
@@ -315,7 +334,7 @@
   <textarea id="codeMobile" style="position:absolute; left:-9999px; top:-9999px;">javascript:(()=>{window.onblur=null;document.onvisibilitychange=null;window.addEventListener('blur',e=>{e.stopImmediatePropagation();},true);document.addEventListener('visibilitychange',e=>{e.stopImmediatePropagation();},true);const oWA=window.addEventListener;window.addEventListener=function(t,...a){if(t==='blur'||t==='visibilitychange')return;return oWA.apply(this,[t,...a])};const oDA=document.addEventListener;document.addEventListener=function(t,...a){if(t==='visibilitychange')return;return oDA.apply(this,[t,...a])};document.querySelectorAll('*').forEach(e=>e.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);setInterval(()=>{navigator.clipboard.writeText=()=>Promise.resolve();},400);})();</textarea>
 
 
-  <h2 style="margin-top: 40px;">ℹ️ ထည့်သွင်းနည်း ကြည့်ရန်</h2>
+  <span class="install-title">ℹ️ ထည့်သွင်းနည်း ကြည့်ရန်</span>
 
   <div class="buttons-row" style="margin-bottom:18px;">
     <button class="nav-button" onclick="document.getElementById('desktopSection').scrollIntoView({behavior:'smooth'});">💻 Desktop</button>
@@ -540,8 +559,14 @@
     ↑
   </button>
 
+  <audio id="copySfx" src="SFX/gotitem.mp3" preload="auto"></audio>
+
   <script>
     function copyCode(type) {
+      // Play sound effect
+      document.getElementById('copySfx').currentTime = 0;
+      document.getElementById('copySfx').play();
+
       const textarea = document.getElementById(type === 'desktop' ? "codeDesktop" : "codeMobile");
       const successMsg = document.getElementById(type === 'desktop' ? "successMsgDesktop" : "successMsgMobile");
       textarea.select();
