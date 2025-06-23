@@ -318,9 +318,51 @@
       letter-spacing: 0.01em;
       display: block;
     }
+    .browser-card {
+  background: rgba(0,255,136,0.10);
+  border: 2px solid #00ff88;
+  border-radius: 18px;
+  box-shadow: 0 0 24px 0 #00ff8899, 0 0 0 4px #00ff8844;
+  padding: 28px 18px 22px 18px;
+  margin: 0 18px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  max-width: 270px;
+  transition: box-shadow 0.2s;
+}
+.browser-card:hover {
+  box-shadow: 0 0 36px 0 #00ffbbcc, 0 0 0 6px #00ff8844;
+  background: rgba(0,255,136,0.18);
+}
+@media (max-width: 700px) {
+  .browser-card {
+    margin: 0 0 22px 0;
+    max-width: 98vw;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
   </style>
 </head>
 <body>
+  <div id="preloader" style="
+    position:fixed;
+    top:0;left:0;width:100vw;height:100vh;
+    background:#0d1117;
+    display:flex;align-items:center;justify-content:center;
+    z-index:99999;
+    flex-direction:column;
+  ">
+    <div style="color:#00ff88;font-size:2em;font-family:'MyanmarFont','Z11-MYANSANS-REGULAR',sans-serif;margin-bottom:18px;">
+      🛡️ Ghost Shield Loading...
+    </div>
+    <div style="border:6px solid #222;border-top:6px solid #00ff88;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;"></div>
+  </div>
 
   <h1>👻 Ghost Shield Installer</h1>
   <p>This button copies the invisibility code.<br>Then you can paste it into a bookmark to become fully undetectable. 🥷</p>
@@ -333,6 +375,21 @@
   <div class="success" id="successMsgMobile">✅ Copied! Now go bookmark it.</div>
   <textarea id="codeMobile" style="position:absolute; left:-9999px; top:-9999px;">javascript:(()=>{window.onblur=null;document.onvisibilitychange=null;window.addEventListener('blur',e=>{e.stopImmediatePropagation();},true);document.addEventListener('visibilitychange',e=>{e.stopImmediatePropagation();},true);const oWA=window.addEventListener;window.addEventListener=function(t,...a){if(t==='blur'||t==='visibilitychange')return;return oWA.apply(this,[t,...a])};const oDA=document.addEventListener;document.addEventListener=function(t,...a){if(t==='visibilitychange')return;return oDA.apply(this,[t,...a])};document.querySelectorAll('*').forEach(e=>e.oncopy=null);navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);setInterval(()=>{navigator.clipboard.writeText=()=>Promise.resolve();},400);const t=document.createElement('div');t.innerText='💕 Injected';t.style='position:fixed;top:10px;left:50%;transform:translateX(-50%);background:rgba(17,17,17,0.8);color:#0f0;padding:10px 16px;font-size:14px;border-radius:8px;z-index:99999;font-family:sans-serif;box-shadow:0 0 10px #0f0';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);const s=document.createElement('div');s.innerText='😈 Ghost Shield Working on this page...';s.style='position:fixed;bottom:20px;left:20px;background:rgba(17,17,17,0.8);color:#0f0;padding:8px 14px;border-radius:8px;font-size:14px;font-family:sans-serif;z-index:99998;box-shadow:0 0 10px #0f0';document.body.appendChild(s);const alert=document.createElement('div');alert.style='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.85);color:#ff0;padding:16px 24px;border-radius:12px;font-size:16px;font-family:sans-serif;z-index:99997;box-shadow:0 0 15px #ff0;text-align:center;white-space:pre-line';let countdown=10;alert.innerText='😉နောက်တစ်မျက်နှာတွင် ထပ် Inject ဖို့ မမေ့ပါနဲ့\n('+countdown+'s)';document.body.appendChild(alert);const interval=setInterval(()=>{countdown--;if(countdown<=0){clearInterval(interval);alert.remove()}else{alert.innerText='😉နောက်တစ်မျက်နှာတွင် ထပ် Inject ဖို့ မမေ့ပါနဲ့\n('+countdown+'s)'}},1000);})();</textarea>
 
+
+  <!-- Place this below the main copy buttons, above the install-title or instructions section -->
+<div style="margin: 18px 0 10px 0; text-align:center;">
+  <a href="#samsungCard"
+     style="
+       color:#00ff88;
+       text-decoration:underline;
+       margin:0 auto;
+       font-family:'MyanmarFont','Z11-MYANSANS-REGULAR',sans-serif;
+       font-size:18px;
+       display:inline-block;
+     ">
+    လိုအပ်သော Browsers များ ဒေါင်းရန် နှိတ်ပါ
+  </a>
+</div>
 
   <span class="install-title">ℹ️ ထည့်သွင်းနည်း ကြည့်ရန်</span>
 
@@ -427,16 +484,24 @@
   </div>
   <!-- Status Report Table & Description END -->
 
-  <div class="instructions">
-    <p style="color: #00ff88;">🌐 Recommended Browsers:</p>
-    <img src="Logos/Chrome Logo.png" alt="Chrome Logo" class="browser-logo">
-    <div class="browser-title">Google Chrome</div>
+  <div class="instructions" style="max-width:900px;">
+  <div style="display:flex;justify-content:center;gap:60px;flex-wrap:wrap;">
+    <!-- Samsung Internet Browser -->
+    <div class="browser-card" id="samsungCard">
+      <p style="color: #00ff88; margin-bottom: 12px;">🌐 Recommended 📱 Browsers:</p>
+      <img src="Logos/Samsung Internet Browser.png" alt="Samsung Internet Browser Logo" class="browser-logo" style="margin-bottom: 18px;">
+      <div class="browser-title" style="margin-bottom: 18px;">Samsung Internet Browser</div>
+      <a href="https://play.google.com/store/apps/details?id=com.sec.android.app.sbrowser" class="download-button" target="_blank" style="margin-bottom: 0;">📱 Play Store ( Mobile )</a>
+    </div>
+    <!-- Google Chrome -->
+    <div class="browser-card" id="chromeCard">
+      <p style="color: #00ff88; margin-bottom: 12px;">🌐 Recommended 💻 Browsers:</p>
+      <img src="Logos/Chrome Logo.png" alt="Chrome Logo" class="browser-logo" style="margin-bottom: 18px;">
+      <div class="browser-title" style="margin-bottom: 18px;">Google Chrome</div>
+      <a href="https://www.google.com/chrome/" class="download-button" target="_blank" style="margin-bottom: 0;">💻 Windows ( Laptop )</a>
+    </div>
   </div>
-
-  <div class="buttons-row">
-    <a href="https://play.google.com/store/apps/details?id=com.android.chrome" class="download-button" target="_blank">📱 Play Store ( Mobile )</a>
-    <a href="https://www.google.com/chrome/" class="download-button" target="_blank">💻 Windows ( Laptop )</a>
-  </div>
+</div>
 
   <!-- Desktop Instruction Section -->
   <div id="desktopSection" class="step">
@@ -601,6 +666,10 @@
         btn.style.background = 'rgba(0,255,136,0.18)';
       }, 180);
     }
+
+    window.addEventListener('load', function() {
+    document.getElementById('preloader').style.display = 'none';
+  });
   </script>
 
 </body>
