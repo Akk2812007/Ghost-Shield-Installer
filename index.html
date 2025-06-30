@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛡️ Ghost Shield Installer</title>
+  <style>
+    @font-face {
+      font-family: 'MyanmarFont';
+      src: url('fonts/Z11-MYANSANS-REGULAR.TTF') format('truetype');
+    }
+    @font-face {
+      font-family: 'YatiRound';
+      src: url('fonts/YatiRound-ExtraBold.ttf') format('truetype');
+      font-weight: bold;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(145deg, #0d1117, #11151c);
+      color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00ff88;
+      font-size: 2.2em;
+      margin-bottom: 10px;
+      text-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+      color: #bbb;
+      max-width: 600px;
+    }
+
+    .copy-button, .nav-button, .download-button {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      color: #00ff88;
+      font-weight: bold;
+      font-size: 1em;
+      padding: 15px 25px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+      margin: 10px;
+    }
+
+    .copy-button:hover, .nav-button:hover, .download-button:hover {
+      background: rgba(0, 255, 136, 0.2);
+      color: #ffffff;
+      transform: scale(1.05);
+      cursor: url('Cursor/2.png'), pointer;
+    }
+
+    .success {
+      margin-top: 10px;
+      font-size: 0.95em;
+      color: #00ff88;
+      display: none;
+    }
+
+    .instructions {
+      margin-top: 30px;
+      font-size: 0.95em;
+      color: #888;
+      max-width: 500px;
+    }
+
+    .step {
+      text-align: left;
+      max-width: 800px;
+      margin: 20px auto;
+    }
+
+    .step h3 {
+      color: #00ff88;
+      margin-bottom: 10px;
+    }
+
+    .step p {
+      font-family: 'MyanmarFont', 'Segoe UI', sans-serif;
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      color: #ccc;
+    }
+
+    .step img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      /* Add drop shadow for all step images */
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.35), 0 0 0 4px #00ff8855;
+    }
+
+    .step img:hover {
+      transform: scale(1.01);
+    }
+
+    .buttons-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      display: none;
+    }
+
+    .overlay img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+    }
+
+    .browser-logo {
+      width: 100px;
+      height: auto;
+      margin: 10px auto;
+      display: block;
+    }
+
+    .browser-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.5em;
+      color: white;
+      margin-top: 10px;
+    }
+
+    /* Scroll to Top Button */
+    #toTopBtn {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(0, 255, 136, 0.18);
+      color: #00ff88;
+      font-size: 2em;
+      box-shadow: 0 2px 12px #0008;
+      cursor: pointer;
+      z-index: 10000;
+      transition: background 0.2s, transform 0.1s;
+      opacity: 0.7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #toTopBtn:hover {
+      background: rgba(0, 255, 136, 0.35);
+    }
+
+    /* Status Report Table */
+    .status-report-container {
+      background: rgba(0,255,136,0.06);
+      border: 1.5px solid #00ff8850;
+      border-radius: 16px;
+      margin: 30px auto 30px auto;
+      padding: 18px 10px 10px 10px;
+      max-width: 900px;
+      box-shadow: 0 4px 32px 0 rgba(0,255,136,0.07);
+    }
+
+    .status-report-desc {
+      font-size: 1.08em;
+      margin-bottom: 10px;
+      color: #00ff88;
+      text-align: left;
+    }
+
+    .status-report-desc strong {
+      font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    .status-table-wrapper {
+      overflow-x: auto;
+    }
+
+    .status-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1em;
+      background: rgba(0,0,0,0.12);
+      border-radius: 12px;
+      overflow: hidden;
+      min-width: 320px;
+    }
+
+    .status-table th, .status-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid #00ff8822;
+      text-align: left;
+    }
+
+    .status-table th {
+      background: rgba(0,255,136,0.13);
+      color: #00ff88;
+      font-weight: bold;
+      font-size: 1.05em;
+    }
+
+    .status-table td.safe {
+      color: #00ff88;
+      font-weight: bold;
+    }
+
+    .status-table td.warn {
+      color: #ffd600;
+      font-weight: bold;
+    }
+
+    .status-table td.no {
+      color: #ff4b4b;
+      font-weight: bold;
+    }
+
+    .status-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .status-summary {
+      margin-top: 16px;
+      font-size: 1.08em;
+      color: #bbb;
+      text-align: left;
+    }
+
+    .status-summary .safe {
+      color: #00ff88;
+    }
+    .status-summary .warn {
+      color: #ffd600;
+    }
+    .status-summary .no {
+      color: #ff4b4b;
+    }
+
+    @media (max-width: 600px) {
+      .status-report-container {
+        padding: 10px 2px 8px 2px;
+        font-size: 0.98em;
+      }
+      .status-table th, .status-table td {
+        padding: 8px 4px;
+        font-size: 0.97em;
+      }
+      .status-report-desc, .status-summary {
+        font-size: 0.98em;
+      }
+    }
+
+    /* Make all table text use MyanmarFont except the title */
+    .status-table,
+    .status-table th,
+    .status-table td,
+    .status-summary,
+    .status-report-desc span,
+    .status-summary span,
+    .status-table-wrapper {
+      font-family: 'MyanmarFont', 'Segoe UI', sans-serif;
+    }
+
+    /* Only the title (strong) uses DM Sans or fallback */
+    .status-report-desc strong {
+      font-family: 'DM Sans', 'Segoe UI', Arial, sans-serif;
+      letter-spacing: 0.01em;
+    }
+
+    /* Make step instruction text white and glowing */
+    #desktopSection p,
+    #mobileSection p {
+      color: #fff !important;
+    
+    
+    }
+    body, button, a, .copy-button, .nav-button, .download-button {
+  cursor: url('Cursor/1.png'), auto;
+}
+    .install-title {
+      font-family: 'YatiRound', 'MyanmarFont', 'Segoe UI', sans-serif;
+      font-size: 25px;
+      color: #00ff88;
+      text-shadow: 0 0 12px #00ff8899, 0 0 2px #00ff88;
+      margin-top: 40px;
+      margin-bottom: 18px;
+      letter-spacing: 0.01em;
+      display: block;
+    }
+    .browser-card {
+  background: rgba(0,255,136,0.10);
+  border: 2px solid #00ff88;
+  border-radius: 18px;
+  box-shadow: 0 0 24px 0 #00ff8899, 0 0 0 4px #00ff8844;
+  padding: 28px 18px 22px 18px;
+  margin: 0 18px 18px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 220px;
+  max-width: 270px;
+  transition: box-shadow 0.2s;
+}
+.browser-card:hover {
+  box-shadow: 0 0 36px 0 #00ffbbcc, 0 0 0 6px #00ff8844;
+  background: rgba(0,255,136,0.18);
+}
+@media (max-width: 700px) {
+  .browser-card {
+    margin: 0 0 22px 0;
+    max-width: 98vw;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg);}
+  100% { transform: rotate(360deg);}
+}
+  </style>
+</head>
+<body>
+  <div id="preloader" style="
+    position:fixed;
+    top:0;left:0;width:100vw;height:100vh;
+    background:#0d1117;
+    display:flex;align-items:center;justify-content:center;
+    z-index:99999;
+    flex-direction:column;
+  ">
+    <div style="color:#00ff88;font-size:2em;font-family:'MyanmarFont','Z11-MYANSANS-REGULAR',sans-serif;margin-bottom:18px;">
+      🛡️ Ghost Shield Loading...
+    </div>
+    <div style="border:6px solid #222;border-top:6px solid #00ff88;border-radius:50%;width:48px;height:48px;animation:spin 1s linear infinite;"></div>
+  </div>
+
+  <h1>👻 Ghost Shield Installer</h1>
+  <p>This button copies the invisibility code.<br>Then you can paste it into a bookmark to become fully undetectable. 🥷</p>
+
+  <button class="copy-button" onclick="copyCode('desktop')">⚔️ Copy Ghost Shield For 💻Desktop</button>
+  <div class="success" id="successMsgDesktop">✅ Copied! Now go bookmark it.</div>
+  <textarea id="codeDesktop" style="position:absolute; left:-9999px; top:-9999px;">javascript:(()=>{window.onblur=null;document.onvisibilitychange=null;navigator.clipboard.writeText=()=>Promise.resolve();document.body.addEventListener('copy',e=>{e.stopImmediatePropagation();e.stopPropagation();},true);const t=document.createElement('div');t.innerText='💕 Injected';t.style='position:fixed;top:10px;left:50%;transform:translateX(-50%);background:rgba(17,17,17,0.7);color:#0f0;padding:10px 16px;font-size:14px;border-radius:8px;z-index:10000;font-family:sans-serif;box-shadow:0 0 10px #0f0';document.body.appendChild(t);setTimeout(()=>t.remove(),2500);const s=document.createElement('div');s.innerText='😈 Ghost Shield Working on this page...';s.style='position:fixed;bottom:20px;left:20px;background:rgba(17,17,17,0.7);color:#0f0;padding:8px 14px;border-radius:8px;font-size:14px;font-family:sans-serif;z-index:9999;box-shadow:0 0 10px #0f0';document.body.appendChild(s);const alert=document.createElement('div');alert.style='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,0.5);color:#ff0;padding:16px 24px;border-radius:12px;font-size:18px;font-family:sans-serif;z-index:10001;box-shadow:0 0 10px #ff0;text-align:center;white-space:pre-line';let countdown=6;alert.innerText='😉နောက်တစ်မျက်နှာတွင် ထပ် Inject ဖို့ မမေ့ပါနဲ့\n('+countdown+'s)';document.body.appendChild(alert);const interval=setInterval(()=>{countdown--;if(countdown<=0){clearInterval(interval);alert.remove()}else{alert.innerText='😉နောက်တစ်မျက်နှာတွင် ထပ် Inject ဖို့ မမေ့ပါနဲ့\n('+countdown+'s)'}},1000);})();</textarea>
+
+  <button class="copy-button" onclick="copyCode('mobile')">⚔️ Copy Ghost Shield For 📱Mobile</button>
+  <div class="success" id="successMsgMobile">✅ Copied! Now go bookmark it.</div>
+  <textarea id="codeMobile" style="position:absolute; left:-9999px; top:-9999px;">javascript:(function()%7Bjavascript%3A(()%3D%3E%7Bwindow.onblur%3Dnull%3Bdocument.onvisibilitychange%3Dnull%3Bwindow.addEventListener('blur'%2Ce%3D%3Ee.stopImmediatePropagation()%2Ctrue)%3Bdocument.addEventListener('visibilitychange'%2Ce%3D%3Ee.stopImmediatePropagation()%2Ctrue)%3Bconst%20oWA%3Dwindow.addEventListener%3Bwindow.addEventListener%3D(t%2C...a)%3D%3Et%3D%3D'blur'%7C%7Ct%3D%3D'visibilitychange'%3Fnull%3AoWA.apply(this%2C%5Bt%2C...a%5D)%3Bconst%20oDA%3Ddocument.addEventListener%3Bdocument.addEventListener%3D(t%2C...a)%3D%3Et%3D%3D'visibilitychange'%3Fnull%3AoDA.apply(this%2C%5Bt%2C...a%5D)%3Bdocument.querySelectorAll('*').forEach(e%3D%3Ee.oncopy%3Dnull)%3Bnavigator.clipboard.writeText%3D()%3D%3EPromise.resolve()%3Bdocument.body.addEventListener('copy'%2Ce%3D%3E%7Be.stopImmediatePropagation()%3Be.stopPropagation()%7D%2Ctrue)%3BsetInterval(()%3D%3Enavigator.clipboard.writeText%3D()%3D%3EPromise.resolve()%2C400)%3Bconst%20b%3Ddocument.createElement('div')%3Bb.innerText%3D'Activated%20on%20this%20page...'%3Bb.style%3D'position%3Afixed%3Bbottom%3A20px%3Bleft%3A12px%3Bbackground%3Argba(0%2C0%2C0%2C0.3)%3Bborder-radius%3A20px%3Bpadding%3A8px%2014px%3Bcolor%3A%230f0%3Bfont-size%3A13px%3Bfont-family%3Asans-serif%3Bz-index%3A99999%3Btransition%3Atransform%200.3s%20ease-in-out'%3Bdocument.body.appendChild(b)%3Blet%20dir%3D1%3BsetInterval(()%3D%3E%7Bb.style.transform%3D%60translateY(%24%7Bdir*2%7Dpx)%60%3Bdir*%3D-1%7D%2C600)%3B%7D)()%7D)()</textarea>
+
+
+  <!-- Place this below the main copy buttons, above the install-title or instructions section -->
+<div style="margin: 18px 0 10px 0; text-align:center;">
+  <a href="#samsungCard"
+     style="
+       color:#00ff88;
+       text-decoration:underline;
+       margin:0 auto;
+       font-family:'MyanmarFont','Z11-MYANSANS-REGULAR',sans-serif;
+       font-size:18px;
+       display:inline-block;
+     ">
+    လိုအပ်သော Browsers များ ဒေါင်းရန် နှိတ်ပါ
+  </a>
+</div>
+
+  <span class="install-title">ℹ️ ထည့်သွင်းနည်း ကြည့်ရန်</span>
+
+  <div class="buttons-row" style="margin-bottom:18px;">
+    <button class="nav-button" onclick="document.getElementById('desktopSection').scrollIntoView({behavior:'smooth'});">💻 Desktop</button>
+    <button class="nav-button" onclick="document.getElementById('mobileSection').scrollIntoView({behavior:'smooth'});">📱 Mobile</button>
+  </div>
+
+  <!-- Status Report Table & Description START -->
+  <div class="status-report-container">
+    <div class="status-report-desc">
+      <strong>🔐 FINAL STATUS REPORT – “ဖတ်ရန် လိုအပ်သည် ⁉️”</strong><br>
+      <span style="color:#bbb;">
+        ဘယ်အရာတွေကနေ ကာကွယ်လို့ ရ ၊ မရ ပြဇယား <br>
+        <b>✅ = လုံခြုံ</b>, <b>⚠️ = သတိထားရန်</b>, <b>❌ = မရ</b>
+      </span>
+    </div>
+    <div class="status-table-wrapper">
+      <table class="status-table">
+        <thead>
+          <tr>
+            <th>💡 ဘာတွေလုပ်လို့ရ ?</th>
+            <th>✅ လုံခြုံရဲ့လား ?</th>
+            <th>🛡️ ဘာလို့ လုံခြုံရတာလဲ / ဘာကြောင့်လဲ </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Select + Hold to Copy လို့ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Ghost Shield allows copy without triggering logs</td>
+          </tr>
+          <tr>
+            <td>တစ်ခြား ChatGPT နဲ့ Apps တွေကို Share ရလား</td>
+            <td class="safe">✅ ရ</td>
+            <td>ဖုန်းပေါ်တွင် အလုပ်ဖြစ်သည် (link ပါတတ်တာ သာမာန်)</td>
+          </tr>
+          <tr>
+            <td>Tabs & Apps အပြောင်းအလဲရလား ? (blur)</td>
+            <td class="safe">✅ ရ</td>
+            <td>Ghost Shield blocks Moodle from knowing you left</td>
+          </tr>
+          <tr>
+            <td>Chrome ကွယ်တာ နဲ့ အကျဥ်းအချဲ့ ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Ghost Shield blocks ၊ 🫠အရမ်း အဝင်အထွက် မလုပ်သင့်</td>
+          </tr>
+          <tr>
+            <td>မေးခွန်းတွေ clipboard ကိုကူးလို့ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Fake clipboard makes Moodle think nothing happened</td>
+          </tr>
+          <tr>
+            <td>Ctrl+C or right-click-copy ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Logs are blocked, and your copy still works</td>
+          </tr>
+          <tr>
+            <td>မေးခွန်းတစ်ပုဒ်လုံး ကူးလို့ရလား ?</td>
+            <td class="safe">✅ ရ</td>
+            <td>Safe via selection or console tools</td>
+          </tr>
+          <tr>
+            <td>Chrome Window Size အပြောင်းအလဲ (ကွန်ပြူတာ)</td>
+            <td class="warn">⚠️သာမာန်</td>
+            <td>ကာကွယ်လို့ မရ, အန္တရာယ်နည်းသည်။ အရမ်းမလုပ်သင့် 🫠</td>
+          </tr>
+          <tr>
+            <td>ကိုယ်ကူးတာတွေကို Moodle မှတ်ထားလား ?</td>
+            <td class="warn">⚠️မမှတ်</td>
+            <td>From browser itself, but not dangerous if no real copy triggered</td>
+          </tr>
+          <tr>
+            <td>Safe Exam Browser(SEB)တွင် အလုပ်ဖြစ်လား ?</td>
+            <td class="no">❌မရ (ပိတ်ခံထားရ)</td>
+            <td>Ghost Shield won’t work in SEB – Chrome သုံးနေရင် အဆင်ပြေပါသည်</td>
+          </tr>
+          <tr>
+            <td>Moodle က ကိုယ့်ခြေရာ၊လက်ရာ မြင်ရသလား</td>
+            <td class="safe">✅မမြင်ရ</td>
+            <td>All event tracking is neutralized by Ghost Shield</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="status-summary">
+      <b>🧠 အရေးပါသော အချက်များ</b><br>
+      <span class="safe">✅ အကြောက်အလန့်မရှိ ကူးယူနိုင်, ရှဲလ်နိုင်, Apps အဝင်အထွက်လုပ်နိုင်, အပေါ်အောက်ဆွဲနိုင်ပါသည်။</span><br><br>
+      <span class="no">❌သို့သော် ⚠️အရမ်းအဝင်အထွက် မလုပ်ဖို့ သတိပေးပါရစေ။ ⚠️ Bookmark ကို စာမေးပွဲ page ရောက်ပြီးမှ မနှိတ်ထားပဲ မလုပ်မိစေရန်။ ⚠️Page အပြောင်းအလဲ နှင့် Website Reload/Refresh ဖြစ်သွားလျှင် Bookmark ထပ်နှိတ်ပေးဖို့ လိုအပ်သည်။ 💯သေချာဖို့ လိုအပ်သည်။</span><br><br>
+      <span class="warn">⚠️ အနည်းငယ်သော သတိပေးချက်တစ်ချို့အား Codes ထဲတွင်ဖြစ်နိုင်ပါသည်, သို့သော် ထောက်လှမ်းခြင်း၊ မှတ်တမ်းတင်ခြင်း အများအပြား မတင်နိုင်ပါ။ ပြစ်ချက် တစ်ချက်၊ နှစ်ချက်ဖြင့် အပြစ်ပေးခြင်း မထိနိုင်လောက်ပါ။ 😉 Btw ပိရိပါစေ။</span>
+    </div>
+  </div>
+  <!-- Status Report Table & Description END -->
+
+  <div class="instructions" style="max-width:900px;">
+  <div style="display:flex;justify-content:center;gap:60px;flex-wrap:wrap;">
+    <!-- Samsung Internet Browser -->
+    <div class="browser-card" id="samsungCard">
+      <p style="color: #00ff88; margin-bottom: 12px;">🌐 Recommended 📱 Browsers:</p>
+      <img src="Logos/Samsung Internet Browser.png" alt="Samsung Internet Browser Logo" class="browser-logo" style="margin-bottom: 18px;">
+      <div class="browser-title" style="margin-bottom: 18px;">Samsung Internet Browser</div>
+      <a href="https://play.google.com/store/apps/details?id=com.sec.android.app.sbrowser" class="download-button" target="_blank" style="margin-bottom: 0;">📱 Play Store ( Mobile )</a>
+    </div>
+    <!-- Google Chrome -->
+    <div class="browser-card" id="chromeCard">
+      <p style="color: #00ff88; margin-bottom: 12px;">🌐 Recommended 💻 Browsers:</p>
+      <img src="Logos/Chrome Logo.png" alt="Chrome Logo" class="browser-logo" style="margin-bottom: 18px;">
+      <div class="browser-title" style="margin-bottom: 18px;">Google Chrome</div>
+      <a href="https://www.google.com/chrome/" class="download-button" target="_blank" style="margin-bottom: 0;">💻 Windows ( Laptop )</a>
+    </div>
+  </div>
+</div>
+
+  <!-- Desktop Instruction Section -->
+  <div id="desktopSection" class="step">
+    <h3>💻 Desktop:</h3>
+    <div id="desktopStep1">
+      <h3>Step 1 :</h3>
+      <p>
+        ၁။ Laptop အတွက် [⚔️ Copy Ghost Shield For 💻Desktop] ကိုနှိတ်၍ ကူးပါ<br>
+        ၂။ ညာဖက် အပေါ်ဒေါင့်ရှိ [⭐️] အားနှိတ်ပါ
+      </p>
+      <img src="Ins.Laptop/1.png" alt="Step 1" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep2">
+      <h3>Step 2 :</h3>
+      <p>
+        ၃။ Folder အား Bookmarks bar အားရွေးပေးပါ <br>
+        [ ထိုအခါမှသာ Search Bar အောက်က Bar မှာ အမြဲ ပေါ်နေမှာဖြစ်ပါတယ် ]
+      </p>
+      <img src="Ins.Laptop/2.png" alt="Step 2" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep3">
+      <h3>Step 3 :</h3>
+      <p>
+        ၄။ [⭐️] ဘေးက အစက်သုံးစက် အားနှိတ်ပါ<br>
+        ၅။ ⭐️ Bookmarks and Lists အား cursor တင်ကြည့်ပါ<br>
+        ၆။ Show bookmarks bar အားဖွင့်ထားပေးရန် လိုအပ်ပါသည်<br>
+        ၇။ Bookmarks အောက်မှ Ghost Shield Installer အား Mouse/Touchpad ၏ ညာဖက် ခလုပ်အား နှိတ်၍ ဖွင့်ပါ
+      </p>
+      <img src="Ins.Laptop/3.png" alt="Step 3" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep4">
+      <h3>Step 4 :</h3>
+      <p>
+        ၈။ Edit... ခလုတ်အားနှိတ်ပါ
+      </p>
+      <img src="Ins.Laptop/4.png" alt="Step 4" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep5">
+      <h3>Step 5 :</h3>
+      <p>
+        ၉။ နာမည်အား ရှေ့ဆုံး၌ "Inject......" ထည့်ပေးပါ ( ကြိုက်တဲ့ Name ပြောင်းထားနိုင်ပါသည် )<br>
+        ၁၀။ အောက်က URL အားဖျက်ပြီး ရှေ့ဆုံး၌ ကူးခဲ့သော Codes အား Paste ကူးချပေးပါ
+      </p>
+      <img src="Ins.Laptop/5.png" alt="Step 5" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep6">
+      <h3>Step 6 :</h3>
+      <p>
+        ၁၁။ နာမည် နှင့် Code ထည့်သွားပြီရင် ရပါပြီ (သေချာစစ်ဆေးပါ)
+      </p>
+      <img src="Ins.Laptop/6.png" alt="Step 6" onclick="showOverlay(this.src);">
+    </div>
+    <div id="desktopStep7">
+      <h3>Step 7 :</h3>
+      <p>
+        ၁၂။ အပြင်နေရာအားပြန်ထွက်ပြီးလျှင် Bookmark Bar မှာ Inject Ghost Shield အား မြင်နေရလျှင် နှိတ်လို့ရလျှင် Installation အလုပ်ဖြစ်ပြီဖြစ်ပါသည် <br>
+      </p>
+      <img src="Ins.Laptop/7.png" alt="Step 7" onclick="showOverlay(this.src);">
+    </div>
+  </div>
+
+  <div id="mobileSection" class="step">
+    <h3>📱 Mobile:</h3>
+    <div id="mobileStep1">
+      <h3>လိုအပ်သော Setting :</h3>
+      <p>
+        🟡 ၁။ Samsung Internet Browser ဝင်ဝင်ချင်း Theme ကို ဖုန်း Theme နဲ့ ညီအောင် ဒါမှမဟုတ် လိုတာကိုရွေး ( Exam အတွင်း အလင်းအမှောင် အလင်းပြန်သတိထားရန်)<br>
+        🟡 ၂။ ညာဖက် အောက်ဒေါင့်က BAR ၃ တန်းကိုဖွင့်ပြီး Settings အားနှိတ်ပါ
+      </p>
+      <img src="Ins.Mobile/1.png" alt="Step 1" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep2">
+      <h3>Layout Setting :</h3>
+      <p>
+        🟡 ၃။ >> Layout and menus << ကိုရှာဖွင့်ပြီး<br>
+         >> Show bookmarks bar << ကို ဖွင့်ပေးထားပါ (အရေးကြီး လိုအပ်သော Setting ဖြစ်သည်)
+      </p>
+      <img src="Ins.Mobile/2.png" alt="Step 2" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep3">
+      <h3>Code Install :</h3>
+      <p>
+        🟡 ၄။ Website ထဲကိုဝင်ပြီး Mobile အတွက်<br> 
+        [⚔️ Copy Ghost Shield For📱Mobile] ကိုနှိတ်ပြီး ကူး<br>
+        🟡 ၅။ Browser ⬅ဘယ်ဖက်⬆အပေါ်က [ + Bookmark ] ကိုနှိတ် <br>
+      </p>
+      <img src="Ins.Mobile/3.png" alt="Step 3" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep4">
+      <h3>Code Install :</h3>
+      <p>
+        🟡 ၆။ [+] နှိတ်ပြီးပြီးချင်း အောက်ခြေမှာ [Edit] ပေါ်လာရင် ဖွင့် <br>
+        *အောက်က [edit] ကို မနှိတ်လိုက်ရရင် အပေါ်က [bookmark] ကို ဖိထားပြီး [Edit bookmark] ကို နှိတ်
+      </p>
+      <img src="Ins.Mobile/4.png" alt="Step 4" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep5">
+      <h3>Code Install ::</h3>
+      <p>
+        🟡 မူရင်း Web Address ကို ဖျက် <br>
+        🟡 ၇။ Mobile အတွက် ကူးလာတဲ့ javascript: နဲ့ စတဲ့ Code ကို Paste ချ [သေချာစစ်]<br>
+        (Name ကြိုက်တာထား မမေ့ရင် ရပြီ) ပြီးရင် [Save] လုပ်
+      </p>
+      <img src="Ins.Mobile/5.png" alt="Step 5" onclick="showOverlay(this.src);">
+    </div>
+    <div id="mobileStep6">
+      <h3>Installed Testing :</h3>
+      <p>
+        >> အလုပ်ဖြစ် မဖြစ် စမ်းတော့မယ်အချိန်ရောက်ပြီ <br>
+        🟡ကြိုက်တဲ့ Website တစ်ခုခုထဲကို ဝင် <br>
+        🟡 ၈။ ပြီးတာနဲ့ >> Bookmark bar << က code ထည့်ထားတဲ့<br>
+         bookmark [Name/🛡️Ghost] ကိုနှိတ်ကြည့်လို့ <br>
+         ⬇အောက်ဖက် ⬅ဘယ်ဒေါင့်မှာ
+        ( Activated on this page...) ဆိုရင် အလုပ်ဖြစ်ပြီ
+
+      </p>
+      <img src="Ins.Mobile/6.png" alt="Step 6" onclick="showOverlay(this.src);">
+    </div>
+  </div>
+
+  <div class="overlay" id="imageOverlay" onclick="this.style.display='none'">
+    <img id="overlayImg" src="" alt="">
+  </div>
+
+  <button id="toTopBtn" onclick="scrollToTop()">
+    ↑
+  </button>
+
+  <audio id="copySfx" src="SFX/gotitem.mp3" preload="auto"></audio>
+
+  <script>
+    function copyCode(type) {
+      // Play sound effect
+      document.getElementById('copySfx').currentTime = 0;
+      document.getElementById('copySfx').play();
+
+      const textarea = document.getElementById(type === 'desktop' ? "codeDesktop" : "codeMobile");
+      const successMsg = document.getElementById(type === 'desktop' ? "successMsgDesktop" : "successMsgMobile");
+      textarea.select();
+      textarea.setSelectionRange(0, 99999);
+      try {
+        const successful = document.execCommand("copy");
+        if (successful) {
+          successMsg.style.display = "block";
+          setTimeout(() => {
+            successMsg.style.display = "none";
+          }, 2500);
+        } else {
+          alert("Copy failed. Please copy manually.");
+        }
+      } catch (err) {
+        alert("Copy not supported on this browser.");
+      }
+    }
+
+    function showOverlay(src) {
+      const overlay = document.getElementById("imageOverlay");
+      const overlayImg = document.getElementById("overlayImg");
+      overlayImg.src = src;
+      overlay.style.display = "flex";
+    }
+
+    function scrollToTop() {
+      window.scrollTo({top: 0, behavior: 'smooth'});
+      const btn = document.getElementById('toTopBtn');
+      btn.style.background = 'rgba(0,255,136,0.35)';
+      setTimeout(() => {
+        btn.style.background = 'rgba(0,255,136,0.18)';
+      }, 180);
+    }
+
+    window.addEventListener('load', function() {
+    document.getElementById('preloader').style.display = 'none';
+  });
+  </script>
+
+</body>
+</html>
